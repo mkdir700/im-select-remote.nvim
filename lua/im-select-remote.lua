@@ -42,7 +42,8 @@ end
 --- IMSelectBySocket
 -- @treturn int the exit code of the command
 M.IMSelectBySocket = function()
-  local current_dir = vim.fn.expand("%:p:h")
+  local script_path = debug.getinfo(1, "S").source:sub(2)
+  local current_dir = vim.fn.fnamemodify(vim.fn.resolve(script_path), ":h:h")
   local cmd = "python " .. current_dir .. "/im_client.py"
   return os.execute(cmd)
 end
