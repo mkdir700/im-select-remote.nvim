@@ -1,1 +1,2 @@
-vim.api.nvim_create_user_command("IMSelect", require("im-select-osc").IMSelect, {})
+vim.api.nvim_create_user_command("IMSelectByOSC", require("im-select-osc").IMSelectByOSC, {})
+vim.api.nvim_create_user_command("IMSelectBySocket", require("im-select-osc").IMSelectBySocket, {})
