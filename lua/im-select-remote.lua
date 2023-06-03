@@ -40,11 +40,11 @@ M.IMSelectByOSC = function()
 end
 
 --- IMSelectBySocket
--- @treturn result of executing the command
+-- @treturn int the exit code of the command
 M.IMSelectBySocket = function()
   local current_dir = vim.fn.expand("%:p:h")
   local cmd = "python " .. current_dir .. "/im_client.py"
-  return vim.fn.system(cmd)
+  return os.execute(cmd)
 end
 
 M.IMSelectOSCEnable = function()
@@ -69,12 +69,20 @@ M.IMSelectSocketEnable = function()
     ]])
 end
 
+M.IMSelectDisable = function()
+  vim.cmd([[
+      augroup im_select_remote
+        autocmd!
+      augroup END
+    ]])
+end
+
 M.setup = function(args)
   M.config = vim.tbl_deep_extend("force", M.config, args or {})
   if check_auto_enable_socket() then
     local result = M.IMSelectBySocket()
     for i = 1, M.config.socket.max_retry_count do
-      if result == "" then
+      if result == 0 then
         break
       end
       result = M.IMSelectBySocket()
