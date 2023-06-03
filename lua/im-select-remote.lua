@@ -42,9 +42,9 @@ end
 vim.cmd([[
   augroup im_select_remote
     autocmd!
-    autocmd BufEnter * lua require("im-select-osc").IMSelectBySocket()
-    autocmd BufLeave * lua require("im-select-osc").IMSelectBySocket()
-    autocmd InsertLeave * lua require("im-select-osc").IMSelectBySocket()
+    autocmd BufEnter * lua require("im-select-remote").IMSelectBySocket()
+    autocmd BufLeave * lua require("im-select-remote").IMSelectBySocket()
+    autocmd InsertLeave * lua require("im-select-remote").IMSelectBySocket()
   augroup END
 ]])
 
