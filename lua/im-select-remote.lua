@@ -5,6 +5,7 @@ M.config = {
   },
   socket = {
     port = 23333,
+    max_retry_count = 3,
   },
 }
 
@@ -39,7 +40,24 @@ end
 M.IMSelectBySocket = function()
   local current_dir = vim.fn.expand("%:p:h")
   local cmd = "python " .. current_dir .. "/im_client.py"
-  os.execute(cmd)
+  local result = vim.fn.system(cmd)
+  local retry_count = 0
+  local max_retry_count = M.config.socket.max_retry_count
+
+  for i = 1, max_retry_count do
+    if result == "" then
+      break
+    end
+    result = vim.fn.system(cmd)
+    retry_count = i
+    vim.cmd("sleep 500m")
+  end
+
+  if retry_count == max_retry_count then
+    vim.cmd("echohl WarningMsg")
+    vim.cmd("echomsg 'IMSelectServer is not running, please start it first!'")
+    vim.cmd("echohl None")
+  end
 end
 
 M.IMSelectOSCEnable = function()
