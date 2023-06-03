@@ -9,6 +9,8 @@ M.config = {
   },
 }
 
+local retry_count = 0
+
 --- write writes the OSC 1337 escape sequence to the terminal
 -- @tparam osc1337 string the OSC 1337 escape sequence
 -- @treturn bool whether the write was successful
@@ -41,7 +43,6 @@ M.IMSelectBySocket = function()
   local current_dir = vim.fn.expand("%:p:h")
   local cmd = "python " .. current_dir .. "/im_client.py"
   local result = vim.fn.system(cmd)
-  local retry_count = 0
   local max_retry_count = M.config.socket.max_retry_count
 
   for i = 1, max_retry_count do
@@ -50,7 +51,7 @@ M.IMSelectBySocket = function()
     end
     result = vim.fn.system(cmd)
     retry_count = i
-    vim.cmd("sleep 500m")
+    vim.cmd("sleep 100m")
   end
 
   if retry_count == max_retry_count then
