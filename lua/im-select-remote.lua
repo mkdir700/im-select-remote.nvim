@@ -40,6 +40,10 @@ M.IMSelectByOSC = function()
 end
 
 M.IMSelectBySocket = function()
+  if retry_count == M.config.socket.max_retry_count then
+    return
+  end
+
   local current_dir = vim.fn.expand("%:p:h")
   local cmd = "python " .. current_dir .. "/im_client.py"
   local result = vim.fn.system(cmd)
