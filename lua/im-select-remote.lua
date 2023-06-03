@@ -8,12 +8,6 @@ M.config = {
   },
 }
 
--- setup is the public method to setup your plugin
---
-M.setup = function(args)
-  M.config = vim.tbl_deep_extend("force", M.config, args or {})
-end
-
 --- write writes the OSC 1337 escape sequence to the terminal
 -- @tparam osc1337 string the OSC 1337 escape sequence
 -- @treturn bool whether the write was successful
@@ -29,6 +23,15 @@ local function write(osc1337)
   return success
 end
 
+--- check_auto_enable_conditions checks whether the auto enable conditions are met
+-- @treturn bool whether the auto enable conditions are met
+local function check_auto_enable_socket()
+  if vim.fn.system("cat ~/.ssh/config | grep 'Port " .. M.config.socket.port .. "'") ~= "" then
+    return true
+  end
+  return false
+end
+
 M.IMSelectByOSC = function()
   write("\033]1337;Custom=id=" .. M.config.osc.secret .. ":im-select\a")
 end
@@ -39,13 +42,33 @@ M.IMSelectBySocket = function()
   os.execute(cmd)
 end
 
-vim.cmd([[
-  augroup im_select_remote
-    autocmd!
-    autocmd BufEnter * lua require("im-select-remote").IMSelectBySocket()
-    autocmd BufLeave * lua require("im-select-remote").IMSelectBySocket()
-    autocmd InsertLeave * lua require("im-select-remote").IMSelectBySocket()
-  augroup END
-]])
+M.IMSelectOSCEnable = function()
+  vim.cmd([[
+      augroup im_select_remote
+        autocmd!
+        autocmd BufEnter * lua require("im-select-remote").IMSelectBySocket()
+        autocmd BufLeave * lua require("im-select-remote").IMSelectBySocket()
+        autocmd InsertLeave * lua require("im-select-remote").IMSelectBySocket()
+      augroup END
+    ]])
+end
+
+M.IMSelectSocketEnable = function()
+  vim.cmd([[
+      augroup im_select_remote
+        autocmd!
+        autocmd BufEnter * lua require("im-select-remote").IMSelectByOSC()
+        autocmd BufLeave * lua require("im-select-remote").IMSelectByOSC()
+        autocmd InsertLeave * lua require("im-select-remote").IMSelectByOSC()
+      augroup END
+    ]])
+end
+
+M.setup = function(args)
+  M.config = vim.tbl_deep_extend("force", M.config, args or {})
+  if check_auto_enable_socket() then
+    M.IMSelectSocketEnable()
+  end
+end
 
 return M
