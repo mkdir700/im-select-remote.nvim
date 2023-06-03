@@ -19,15 +19,13 @@ end
 -- @treturn bool whether the write was successful
 local function write(osc1337)
   local success = false
-  -- if vim.fn.filwritable("/dev/fd/2") == 1 then
-  -- success = vim.fn.writefile({ osc1337 }, "/dev/fd/2", "b") == 0
-  -- if vim.fn.has("nvim") then
-  -- success = vim.fn.chansend(vim.api.nvim_get_var("stderr"), osc1337) > 0
-  -- else
-  vim.cmd("silent! !echo " .. vim.fn.shellescape(osc1337))
-  vim.cmd("redraw!")
-  success = true
-  -- end
+  if vim.fn.has("nvim") then
+    success = vim.fn.chansend(vim.api.nvim_get_var("stderr"), osc1337) > 0
+  else
+    vim.cmd("silent! !echo " .. vim.fn.shellescape(osc1337))
+    vim.cmd("redraw!")
+    success = true
+  end
   return success
 end
 
@@ -40,5 +38,14 @@ M.IMSelectBySocket = function()
   local cmd = "python " .. current_dir .. "/im_client.py"
   os.execute(cmd)
 end
+
+vim.cmd([[
+  augroup im_select_remote
+    autocmd!
+    autocmd BufEnter * lua require("im-select-osc").IMSelectBySocket()
+    autocmd BufLeave * lua require("im-select-osc").IMSelectBySocket()
+    autocmd InsertLeave * lua require("im-select-osc").IMSelectBySocket()
+  augroup END
+]])
 
 return M
