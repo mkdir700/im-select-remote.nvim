@@ -38,6 +38,7 @@ end
 M.IMSelectBySocket = function()
   local current_dir = vim.fn.expand("%:p:h")
   local cmd = "python " .. current_dir .. "/im_client.py"
+  os.execute(cmd)
 end
 
 return M

@@ -12,8 +12,10 @@ class IMSelectServer:
     def run(self):
         self.sock.listen(1)
         while True:
-            conn, _ = self.sock.accept()
-            data = conn.recv(2)
+            conn, address = self.sock.accept()
+            print("Connected by", address)
+            data = conn.recv(1)
+            print("Received", data)
             if data == b"1":
                 self._switch_to_en()
             elif data == b"2":
