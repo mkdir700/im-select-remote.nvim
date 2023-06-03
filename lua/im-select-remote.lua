@@ -39,30 +39,12 @@ M.IMSelectByOSC = function()
   write("\033]1337;Custom=id=" .. M.config.osc.secret .. ":im-select\a")
 end
 
+--- IMSelectBySocket
+-- @treturn result of executing the command
 M.IMSelectBySocket = function()
-  if retry_count == M.config.socket.max_retry_count then
-    return
-  end
-
   local current_dir = vim.fn.expand("%:p:h")
   local cmd = "python " .. current_dir .. "/im_client.py"
-  local result = vim.fn.system(cmd)
-  local max_retry_count = M.config.socket.max_retry_count
-
-  for i = 1, max_retry_count do
-    if result == "" then
-      break
-    end
-    result = vim.fn.system(cmd)
-    retry_count = i
-    vim.cmd("sleep 100m")
-  end
-
-  if retry_count == max_retry_count then
-    vim.cmd("echohl WarningMsg")
-    vim.cmd("echomsg 'IMSelectServer is not running, please start it first!'")
-    vim.cmd("echohl None")
-  end
+  return vim.fn.system(cmd)
 end
 
 M.IMSelectOSCEnable = function()
@@ -90,6 +72,22 @@ end
 M.setup = function(args)
   M.config = vim.tbl_deep_extend("force", M.config, args or {})
   if check_auto_enable_socket() then
+    local result = M.IMSelectBySocket()
+    for i = 1, M.config.socket.max_retry_count do
+      if result == "" then
+        break
+      end
+      result = M.IMSelectBySocket()
+      retry_count = i
+      vim.cmd("sleep 50m")
+    end
+
+    if retry_count == M.config.socket.max_retry_count then
+      vim.cmd("echohl WarningMsg")
+      vim.cmd("echomsg 'IMSelectServer is not running, please start it first!'")
+      vim.cmd("echohl None")
+    end
+
     M.IMSelectSocketEnable()
   end
 end
