@@ -2,7 +2,6 @@
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/mkdir700/im-select-remote/default.yml?branch=main&style=for-the-badge)
 ![Lua](https://img.shields.io/badge/Made%20with%20Lua-blueviolet.svg?style=for-the-badge&logo=lua)
-![Python](https://img.shields.io/badge/Made%20with%20Python-blueviolet.svg?style=for-the-badge&logo=python)
 
 一个用于在远程服务器上切换本机输入法的 VIM 插件。
 
@@ -60,7 +59,8 @@ IM-Select-Remote 可以连接 Socket 服务以通知本地机器切换输入法�
 
 ```bash
 git clone https://github.com/mkdir700/im-select-remote.git
-python ./im-select-remote/server/im_server.py
+chmod +x ./im-select-remote/server/im_server.sh
+./im-select-remote/server/im_server.sh
 ```
 
 注意：
