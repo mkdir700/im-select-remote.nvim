@@ -6,6 +6,7 @@ M.config = {
   socket = {
     port = 23333,
     max_retry_count = 3,
+    command = "im-select com.apple.keylayout.ABC",
   },
 }
 
@@ -42,9 +43,7 @@ end
 --- IMSelectBySocket
 -- @treturn int the exit code of the command
 M.IMSelectBySocket = function()
-  local script_path = debug.getinfo(1, "S").source:sub(2)
-  local current_dir = vim.fn.fnamemodify(vim.fn.resolve(script_path), ":h:h")
-  local cmd = "python " .. current_dir .. "/im_client.py"
+  local cmd = "echo " .. vim.fn.shellescape(M.config.socket.command) .. " | nc localhost " .. M.config.socket.port
   return os.execute(cmd)
 end
 
