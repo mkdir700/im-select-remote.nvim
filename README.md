@@ -6,6 +6,16 @@
 
 一个用于在远程服务器上切换本机输入法的 VIM 插件。
 
+## Preparation
+
+切换输入法您需要安装第三方工具，我这里推荐使用 [im-select](https://github.com/daipeihust/im-select)，当我执行如下命令即可切换输入法到 ABC 输入法：
+
+```
+im-select com.apple.keylayout.ABC
+```
+
+所以，逻辑非常简单，就是让远程服务器调用本机用于切换输入法的命令即可。
+
 ## Installation
 
 - packer
