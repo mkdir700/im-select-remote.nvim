@@ -89,12 +89,12 @@ end
 M.setup = function(args)
   M.config = vim.tbl_deep_extend("force", M.config, args or {})
   if check_auto_enable_socket() then
-    local result = M.IMSelectBySocket()
+    local result = os.execute("nc -z localhost " .. M.config.socket.port .. " -q 0")
     for i = 1, M.config.socket.max_retry_count do
       if result == 0 then
         break
       end
-      result = M.IMSelectBySocket()
+      result = os.execute("nc -z localhost " .. M.config.socket.port .. " -q 0")
       retry_count = i
       vim.cmd("sleep 50m")
     end
