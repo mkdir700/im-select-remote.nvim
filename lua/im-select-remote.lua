@@ -48,7 +48,7 @@ M.IMSelectBySocket = function()
     .. vim.fn.shellescape(M.config.socket.command)
     .. " | nc localhost "
     .. M.config.socket.port
-    .. " -w 1"
+    .. " -q 0"
   vim.fn.jobstart(cmd, {
     on_stdout = on_stdout,
     on_stderr = on_stdout,
