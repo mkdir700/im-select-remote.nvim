@@ -64,7 +64,6 @@ M.IMSelectOSCEnable = function()
       augroup im_select_remote
         autocmd!
         autocmd BufEnter * lua require("im-select-remote").IMSelectByOSC()
-        autocmd BufLeave * lua require("im-select-remote").IMSelectByOSC()
         autocmd InsertLeave * lua require("im-select-remote").IMSelectByOSC()
       augroup END
     ]])
@@ -75,7 +74,6 @@ M.IMSelectSocketEnable = function()
       augroup im_select_remote
         autocmd!
         autocmd BufEnter * lua require("im-select-remote").IMSelectBySocket()
-        autocmd BufLeave * lua require("im-select-remote").IMSelectBySocket()
         autocmd InsertLeave * lua require("im-select-remote").IMSelectBySocket()
       augroup END
     ]])
