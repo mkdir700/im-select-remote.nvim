@@ -8,7 +8,7 @@
 
 ## Preparation
 
-切换输入法您需要安装第三方工具，我这里推荐使用 [im-select](https://github.com/daipeihust/im-select)，当我执行如下命令即可切换输入法到 ABC 输入法：
+切换输入法您需要安装第三方工具，我这里推荐使用 [im-select](https://github.com/daipeihust/im-select)，当我执行如下命令即可切换至 ABC 输入法：
 
 ```
 im-select com.apple.keylayout.ABC
