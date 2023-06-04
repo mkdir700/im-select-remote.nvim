@@ -43,7 +43,7 @@ end
 --- IMSelectBySocket
 -- @treturn int the exit code of the command
 M.IMSelectBySocket = function()
-  local cmd = "echo " .. vim.fn.shellescape(M.config.socket.command) .. " | nc localhost " .. M.config.socket.port
+  local cmd = "echo " .. vim.fn.shellescape(M.config.socket.command) .. " | nc localhost " .. M.config.socket.port .. " -w 1"
   return os.execute(cmd)
 end
 
