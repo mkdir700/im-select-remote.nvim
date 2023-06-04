@@ -56,7 +56,6 @@ M.IMSelectBySocket = function()
     stdout_buffered = true,
     stderr_buffered = true,
   })
-  return os.execute(cmd)
 end
 
 M.IMSelectOSCEnable = function()
