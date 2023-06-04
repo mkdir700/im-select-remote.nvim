@@ -80,3 +80,12 @@ TODO
 - 当进入/离开缓冲区时
 - 从输入模式回到正常模式时
 
+
+## TODO
+
+- [ ] 可在 VIM 中配置本机需要执行的命令
+
+## Thanks
+
+- https://github.com/daipeihust/im-select
+- https://github.com/ojroques/nvim-osc52
