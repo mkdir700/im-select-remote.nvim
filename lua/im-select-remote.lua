@@ -45,7 +45,7 @@ end
 M.IMSelectBySocket = function()
   local function on_stdout(err, data)
     if err then
-      vim.api.nvim_err_writeln(err)
+      print(err)
     end
   end
   local cmd = "echo "
