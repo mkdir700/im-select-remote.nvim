@@ -63,7 +63,7 @@ chmod +x ./im-select-remote/server/im_server.sh
 ./im-select-remote/server/im_server.sh
 ```
 
-- 自启动
+##### 自启动
 
 Mac OS:
 
