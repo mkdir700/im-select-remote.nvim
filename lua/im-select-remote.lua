@@ -53,8 +53,8 @@ M.IMSelectBySocket = function()
     on_stdout = on_stdout,
     on_stderr = on_stdout,
     on_exit = on_stdout,
-    stdout_buffered = true,
-    stderr_buffered = true,
+    stdout_buffered = false,
+    stderr_buffered = false,
   })
 end
 
