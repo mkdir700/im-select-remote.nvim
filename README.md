@@ -63,6 +63,22 @@ chmod +x ./im-select-remote/server/im_server.sh
 ./im-select-remote/server/im_server.sh
 ```
 
+- 自启动
+
+Mac OS:
+
+```bash
+launchctl load ./launch/localhost.im-server.plist
+launchctl start localhost.im-select.plist
+launchctl status localhost.im-select.plist
+```
+
+Linux:
+
+```bash
+TODO
+```
+
 注意：
 
 打开 NVIM 后，IM-Select-Remote 会去判断是否已配置 SSH，这将作为是否自动连接的前提条件。如果检查通过将连接 Socket 服务，否则最多重试三次后就放弃连接。
@@ -77,13 +93,8 @@ TODO
 
 自动切换输入法的触发时机：
 
-- 当进入/离开缓冲区时
+- 进入缓冲区时
 - 从输入模式回到正常模式时
-
-
-## TODO
-
-- [ ] 可在 VIM 中配置本机需要执行的命令
 
 ## Thanks
 
